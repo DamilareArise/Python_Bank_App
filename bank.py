@@ -6,10 +6,14 @@ import random
 import datetime as dt
 
 
-mycon = sql.connect(host='127.0.0.1', user='root', passwd='', database='mybank_db')
-# mycursor = mycon.cursor()
+mycon = sql.connect(host='127.0.0.1', user='root', passwd='', database='bankProject')
+mycursor = mycon.cursor()
+
+# mycursor.execute("CREATE DATABASE bankProject")
 
 # mycursor.execute("DROP TABLE customer_details")
+# mycursor.execute("DROP TABLE Transaction_table")
+
 
 # mycursor.execute("CREATE TABLE customer_details (customer_ID INT(4) PRIMARY KEY AUTO_INCREMENT, full_name VARCHAR(40), address VARCHAR(20), phone_no VARCHAR(12), username VARCHAR(10) UNIQUE, pin INT(4), account_no VARCHAR(12) UNIQUE, account_balance FLOAT(20))")
 
@@ -18,8 +22,8 @@ mycon = sql.connect(host='127.0.0.1', user='root', passwd='', database='mybank_d
 # mycursor.execute("CREATE TABLE Transaction_table (transaction_id INT(4) PRIMARY KEY AUTO_INCREMENT, date_time DATETIME(6), amount FLOAT(20), transaction_type VARCHAR(20), beneficiary_acc VARCHAR(12), sender_acc VARCHAR(12), reciever_account VARCHAR(12), account_no VARCHAR(12))")
 
 
-# self.mycursor.execute('SHOW TABLES')
-# for table in self.mycursor:
+# mycursor.execute('SHOW TABLES')
+# for table in mycursor:
 #     print(table)
 
 
@@ -43,7 +47,7 @@ class Bank:
         2. Signup
         3. Quit 
         
-        """)
+        """) 
 
         user = input("Input option: ")
         if user.strip() == "1":
@@ -167,7 +171,7 @@ class Bank:
         sys.exit()
     
     def history(self):
-        mycon = sql.connect(host='127.0.0.1', user='root', passwd='', database='mybank_db')
+        
         
         query = "SELECT  date_time, amount, transaction_type, reciever_account  FROM Transaction_table WHERE account_no = %s "
         val = (self.number_user, )
@@ -176,7 +180,7 @@ class Bank:
         
         for each_detail in details:
             print(f"Date&Time:{each_detail[0]}, Amount:{each_detail[1]}, Transaction Type:{each_detail[2]}, Beneficiary Account/Phone:{each_detail[3]}")
-        mycon.close()
+        
         time.sleep(1)
         user = input("Press 'ENTER' to continue or '1' to exit: ")
         while user.strip() != "1":
@@ -184,13 +188,13 @@ class Bank:
         self.quit()
 
     def account_bal(self):
-        mycon = sql.connect(host='127.0.0.1', user='root', passwd='', database='mybank_db')
+        
 
         query2 = "SELECT account_balance FROM customer_details WHERE username = %s AND pin = %s"
         val2 = (self.inp_username, self.inp_pin )
         self.mycursor.execute(query2, val2)
         details = self.mycursor.fetchall()
-        mycon.close()
+        
         time.sleep(1)
         print(f"Your account balance is ${details[0][0]}")
         time.sleep(1)
@@ -198,7 +202,7 @@ class Bank:
         self.landing_page2()
 
     def airtime (self):
-        mycon = sql.connect(host='127.0.0.1', user='root', passwd='', database='mybank_db')
+        
 
         query = "SELECT account_balance FROM customer_details WHERE username = %s AND pin = %s"
         val2 = (self.inp_username, self.inp_pin )
@@ -207,7 +211,7 @@ class Bank:
 
         try:
             user = float(input(f"Input amount: "))
-            num = (input(f"Input Phone number:"))
+            num = input(f"Input Phone number:")
         except:
             print("Invalid Input")
             self.airtime()
@@ -232,14 +236,14 @@ class Bank:
                 val3 = (time_now, user, "Airtime",  self.number_user, num, self.number_user)
                 self.mycursor.execute(query3, val3)
                 mycon.commit()
-                mycon.close()
+                
 
                 print(f"{num} has being credited with ${user} at {time_now}")
                 time.sleep(1)
                 self.landing_page2()
 
     def deposit(self):
-        mycon = sql.connect(host='127.0.0.1', user='root', passwd='', database='mybank_db')
+        
         
         det = {"1":50.0, "2":100.0, "3":500.0, "4":1000.0}
         print ("""
@@ -291,13 +295,13 @@ class Bank:
         val3 = (time_now, request, "Deposit",  self.number_user, self.number_user, self.number_user)
         self.mycursor.execute(query3, val3)
         mycon.commit()
-        mycon.close()
+        
 
         time.sleep(1)
         self.landing_page2()   
                 
     def withdrawal(self):
-        mycon = sql.connect(host='127.0.0.1', user='root', passwd='', database='mybank_db')
+        
 
         det = {"1":50.0, "2":100.0, "3":500.0, "4":1000.0}
         print ("""
@@ -352,12 +356,12 @@ class Bank:
             val3 = (time_now, request, "Withdrawal",  self.number_user, self.number_user, self.number_user)
             self.mycursor.execute(query3, val3)
             mycon.commit()
-            mycon.close()
+            
             time.sleep(1)
             self.landing_page2()
 
     def transfer(self):
-        mycon = sql.connect(host='127.0.0.1', user='root', passwd='', database='mybank_db')
+        
 
         query = "SELECT account_no, full_name  FROM customer_details"
         self.mycursor.execute(query)
@@ -439,11 +443,9 @@ class Bank:
                     val6 = (time_now, amount, "Transfer",  self.number_user, info2[0][2], info2[0][2])
                     self.mycursor.execute(query6, val6)
                     mycon.commit()
-                    mycon.close()
+                    
 
                     time.sleep(1)
-                    self.landing_page2()
-                    
+                    self.landing_page2
+
 atm = Bank()
-
-
