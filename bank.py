@@ -6,7 +6,7 @@ import random
 import datetime as dt
 
 
-mycon = sql.connect(host='127.0.0.1', user='root', passwd='', database='bankProject')
+mycon = sql.connect(host='127.0.0.1', user='root', passwd='', database = 'bankProject')
 mycursor = mycon.cursor()
 
 # mycursor.execute("CREATE DATABASE bankProject")
