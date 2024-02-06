@@ -1,17 +1,16 @@
 
-# from bank import Bank
-# import bank
-# import random
+from bank import Bank
+import random
 
-# class Bank_Branch(bank.Bank):
-#     def __init__(self):
-#         super().__init__()
-#         self.name = input("Bank name: ")
-#         self.account_No = str(random.randint(2300000000, 2399999999))
-#         self.landing_page()
+class Bank_Branch(Bank):
+    def __init__(self):
+        super().__init__()
+        self.name = input("Bank name: ")
+        self.account_No = str(random.randint(2300000000, 2399999999))
+        self.landing_page()
         
 
-# bank_branch = Bank_Branch()
+bank_branch = Bank_Branch()
        
         
 # myfile = open("C:\\python-works\\Banks\\bank2.py", mode= "rt") 
